@@ -8,3 +8,7 @@ commands:
   deathdeleter:
     description: 死亡時、退出時のアイテム消去を行います。
     usage: /deathdeleter <args>
+permissions:
+  deathdeleter.op:
+    description: 管理者のみ
+    default: op

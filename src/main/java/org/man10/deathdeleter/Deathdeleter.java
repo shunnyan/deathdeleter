@@ -15,6 +15,7 @@ import org.man10.deathdeleter.command.deathdeleter;
 import org.man10.deathdeleter.util.ChestGui;
 import org.man10.deathdeleter.util.data;
 import org.man10.deathdeleter.util.itemremove;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -24,7 +25,6 @@ public final class Deathdeleter extends JavaPlugin implements Listener {
     public static FileConfiguration config;
     public static List<ItemStack> Stack;
     public static JavaPlugin plugin;
-    public static int page = 0;
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
@@ -81,26 +81,29 @@ public final class Deathdeleter extends JavaPlugin implements Listener {
         if (event.getClickedInventory() == null) {
             return;
         }
-        if(event.getView().getTitle().equals("§r§l§aDD_登録アイテム§r§g§f")){
+        if(event.getView().getTitle().equals("§r§l§aDD_登録アイテム§r§g§f")) {
             ItemStack clickItem = event.getCurrentItem();
-            if(clickItem == null){
+            if (clickItem == null) {
                 return;
             }
-            if(event.getClickedInventory().equals(player.getInventory())){
+            int nowPage = 0;
+            if (event.getClickedInventory().equals(player.getInventory())) {
                 data.add(clickItem);
-            }else{
-                if(clickItem.getItemMeta().getDisplayName().equals("§a次のページ§g")){
-                    page++;
-                }else if(clickItem.getItemMeta().getDisplayName().equals("§a前のページ§g")){
-                    page--;
-                }else{
+            } else {
+                String page = event.getView().getTopInventory().getContents()[49].getItemMeta().getDisplayName().replace("§fページ: ","");
+                nowPage = Character.getNumericValue(page.charAt(page.length() - 1)) - 1;
+                if (clickItem.getItemMeta().getDisplayName().equals("§a次のページ§g")) {
+                    nowPage++;
+                } else if (clickItem.getItemMeta().getDisplayName().equals("§a前のページ§g")) {
+                    nowPage--;
+                } else {
                     data.remove(clickItem);
                 }
             }
             configReload();
             event.setCancelled(true);
             Inventory gui = event.getView().getTopInventory();
-            ChestGui.setGUI(gui);
+            ChestGui.setGUI(gui, nowPage);
         }
     }
     @EventHandler

@@ -20,7 +20,7 @@ public class deathdeleter implements CommandExecutor , TabCompleter {
         if (command.getName().equalsIgnoreCase("deathdeleter")) {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
-                if(!player.isOp()){
+                if(!player.hasPermission("deathdeleter.op")){
                     player.sendMessage("§cこのコマンドはOP以上の権限者のみ使用可能です。");
                     return true;
                 }
@@ -89,7 +89,7 @@ public class deathdeleter implements CommandExecutor , TabCompleter {
         List<String> completions = new ArrayList<>();
 
         if (command.getName().equalsIgnoreCase("deathdeleter")) {
-            if(sender.isOp()){
+            if(sender.hasPermission("deathdeleter.op")){
                 if (args.length == 1) {
                     completions.add("gui");
                     completions.add("add");
