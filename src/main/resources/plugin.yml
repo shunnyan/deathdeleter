@@ -1,0 +1,10 @@
+name: deathdeleter
+version: '${project.version}'
+main: org.man10.deathdeleter.Deathdeleter
+author: kuri35
+description: DeathDeleter
+api-version: '1.19'
+commands:
+  deathdeleter:
+    description: 死亡時、退出時のアイテム消去を行います。
+    usage: /deathdeleter <args>
